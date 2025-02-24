@@ -15,3 +15,37 @@ export const generateToken = (userId, res) => {
 
     return token;
 }
+
+export class ApiError extends Error {
+    constructor(statusCode, message = "Something went wrong", errors = [], stack = "") {
+        super(message);
+        this.statusCode = statusCode;
+        this.success = false
+        this.message = message
+        this.errors = errors;
+        this.stack = stack;
+        this.data = null;
+
+        if (stack) {
+            this.stack = stack
+        } else {
+            Error.captureStackTrace(this, this.constructor);
+        }
+    }
+}
+
+export class ApiResponse {
+    constructor(statusCode, data, message = "Success") {
+        this.statusCode = statusCode
+        this.data = data
+        this.message = message
+        this.success = statusCode < 400
+    }
+}
+
+
+export const getUserWithoutPassword = (user) => {
+    const userObject = user.toObject();
+    const { password: _, ...userWithoutPassword } = userObject;
+    return userWithoutPassword;
+};
