@@ -1,43 +1,35 @@
-import jwt, { decode } from 'jsonwebtoken';
-import User from '../models/user.model';
+import jwt from 'jsonwebtoken';
+import User from '../models/user.model.js';
+import { ApiError } from '../lib/utils.js';
 
 export const verifyJWT = async (req, res, next) => {
     try {
         const token = req.cookies?.jwt || req.header("Authorization")?.replace("Bearer ", "")
 
         if (!token) {
-            return res.status(401).json({
-                success: false,
-                message: "Unauthorized Access - No Token Provided"
-            })
+            throw new ApiError(401, "Unauthorized Access - No Token Provided")
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-        if (!decoded) {
-            return res.status(401).json({
-                success: false,
-                message: "Unauthorized Access - Invalid Token"
-            })
+        if (!decodedToken) {
+            throw new ApiError(401, "Unauthorized Access - Invalid Token")
         }
 
-        const user = await User.findById(decoded.userId).select('-password');
+        const user = await User.findById(decodedToken.userId).select('-password');
 
         if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: "User Not Found"
-            })
+            throw new ApiError(404, "User not found")
         }
 
         req.user = user;
         next();
 
     } catch (error) {
-        console.log('Error in verifyJWT middleware', error.message);
-        res.status(500).json({
+        console.log('Error in verifyJWT middleware', error?.message);
+        res.status(error?.statusCode || 500).json({
             success: false,
-            message: "Internal Server Error"
+            message: error?.message || "Internal server error"
         })
     }
 }

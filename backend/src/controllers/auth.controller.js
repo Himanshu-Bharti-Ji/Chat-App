@@ -1,6 +1,7 @@
 import { generateToken, ApiError, ApiResponse, getUserWithoutPassword } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"
+import cloudinary from "../lib/cloudinary.js";
 
 
 // Signup controller
@@ -115,8 +116,45 @@ export const logout = async (req, res) => {
 // update profile controller
 export const updateProfile = async (req, res) => {
     try {
+        const { profilePic } = req.body;
+        const userId = req.user._id;
+
+        if (!profilePic) {
+            throw new ApiError(400, "Profile picture is required")
+        }
+
+        const uploadedProfilePic = await cloudinary.uploader.upload(profilePic);
+
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            profilePic: uploadedProfilePic.secure_url
+        }, { new: true });
+
+        if (!updatedUser) {
+            throw new ApiError(404, "User not found")
+        }
+
+        return res.status(200).json(new ApiResponse(200, updatedUser, "Profile updated successfully"))
+
 
     } catch (error) {
+        console.log('Error in updateProfile controller', error.message);
+        res.status(error?.statusCode || 500).json({
+            success: false,
+            message: error?.message || "Internal server error"
+        })
 
+    }
+}
+
+// check auth controller
+export const checkAuth = async (req, res) => {
+    try {
+        return res.status(200).json(new ApiResponse(200, req.user, "User exists"))
+    } catch (error) {
+        console.log('Error in checkAuth controller', error.message);
+        res.status(error?.statusCode || 500).json({
+            success: false,
+            message: error?.message || "Internal server error"
+        })
     }
 }
