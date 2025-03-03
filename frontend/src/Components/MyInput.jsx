@@ -1,0 +1,80 @@
+import React, { useState } from "react";
+import {
+  Box,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import {
+  PersonOutlineOutlined as PersonIcon,
+  EmailOutlined as EmailIcon,
+  LockOutlined as LockIcon,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
+
+const iconMap = {
+  name: PersonIcon,
+  email: EmailIcon,
+  password: LockIcon,
+};
+
+const MyInput = ({ name, label, isRequired = false, formikProps }) => {
+  const theme = useTheme();
+  const [showPassword, setShowPassword] = useState(false);
+  const handleTogglePassword = () => setShowPassword((prev) => !prev);
+
+  const { values, errors, touched, handleChange, handleBlur } = formikProps;
+  const IconComponent = iconMap[name];
+
+  return (
+    <Box>
+      <Typography variant="body2" color={theme.palette.secondary.main}>
+        {label}{" "}
+        {isRequired && (
+          <Box component="span" color="red">
+            *
+          </Box>
+        )}
+      </Typography>
+
+      <TextField
+        variant="outlined"
+        size="small"
+        fullWidth
+        name={name}
+        value={values[name]}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        type={name === "password" && !showPassword ? "password" : "text"}
+        sx={{ mt: 0.5 }}
+        InputProps={{
+          startAdornment: IconComponent && (
+            <InputAdornment position="start">
+              <IconComponent sx={{ color: theme.palette.secondary.main }} />
+            </InputAdornment>
+          ),
+          endAdornment:
+            name === "password" ? (
+              <InputAdornment position="end">
+                <IconButton onClick={handleTogglePassword} edge="end">
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ) : null,
+        }}
+        error={Boolean(
+          errors[name] && (touched[name] || formikProps.submitCount > 0)
+        )}
+      />
+      {errors[name] && (touched[name] || formikProps.submitCount > 0) && (
+        <FormHelperText sx={{ color: "red" }}>{errors[name]}</FormHelperText>
+      )}
+    </Box>
+  );
+};
+
+export default MyInput;
