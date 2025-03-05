@@ -61,7 +61,7 @@ const MyInput = ({ name, label, isRequired = false, formikProps }) => {
             name === "password" ? (
               <InputAdornment position="end">
                 <IconButton onClick={handleTogglePassword} edge="end">
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <VisibilityOff sx={{ color: theme.palette.secondary.main }} /> : <Visibility sx={{ color: theme.palette.secondary.main }} />}
                 </IconButton>
               </InputAdornment>
             ) : null,

@@ -40,7 +40,7 @@ export const signup = asyncHandler(async (req, res) => {
         const userWithoutPassword = getUserWithoutPassword(createdUser);
 
         return res.status(201).json(
-            new ApiResponse(201, "User created successfully", userWithoutPassword)
+            new ApiResponse(201, userWithoutPassword, "User created successfully")
         )
     } else {
         return res.status(400).json({
@@ -88,7 +88,7 @@ export const logout = asyncHandler(async (req, res) => {
         maxAge: 0
     })
     return res.status(200).json(
-        new ApiResponse(200, "Logout successfully")
+        new ApiResponse(200, {}, "Logout successfully")
     )
 
 })

@@ -11,6 +11,7 @@ import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import LoaderUi from "./Components/LoaderUi";
 import theme from "./theme";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -29,28 +30,27 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div>
-          <Navbar />
-          <Routes>
-            <Route
-              path="/"
-              element={authUser ? <HomePage /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/signup"
-              element={!authUser ? <SignupPage /> : <Navigate to="/" />}
-            />
-            <Route
-              path="/login"
-              element={!authUser ? <LoginPage /> : <Navigate to="/" />}
-            />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route
-              path="/profile"
-              element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
-            />
-          </Routes>
-        </div>
+        <Navbar />
+        <Routes>
+          <Route
+            path="/"
+            element={authUser ? <HomePage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/signup"
+            element={!authUser ? <SignupPage /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/login"
+            element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+          />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route
+            path="/profile"
+            element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
+          />
+        </Routes>
+        <Toaster />
       </ThemeProvider>
     </>
   );

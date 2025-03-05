@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Grid2 as Grid,
   Paper,
   Stack,
@@ -12,12 +13,16 @@ import Logo from "../Components/Logo";
 import { Formik } from "formik";
 import MyInput from "../Components/MyInput";
 import { signupSchema } from "../lib/formSchema.js";
+import { useAuthStore } from "../store/useAuthStore";
+import FormikSubmitButton from "../Components/FormikSubmitButton.jsx";
 
 const SignupPage = () => {
   const theme = useTheme();
 
+  const { signup, isSigningUp } = useAuthStore();
+
   const handleSubmit = async (values) => {
-    console.log("values", values);
+    signup(values);
   };
 
   return (
@@ -71,7 +76,7 @@ const SignupPage = () => {
                 <Grid size={12}>
                   <Formik
                     initialValues={{
-                      name: "",
+                      fullName: "",
                       email: "",
                       password: "",
                     }}
@@ -90,7 +95,7 @@ const SignupPage = () => {
                             <Grid size={12}>
                               <MyInput
                                 isRequired
-                                name={"name"}
+                                name={"fullName"}
                                 label="Full Name"
                                 formikProps={props}
                               />
@@ -112,18 +117,11 @@ const SignupPage = () => {
                               />
                             </Grid>
                             <Grid size={12} my={2}>
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                fullWidth
-                                sx={{
-                                  textTransform: "capitalize",
-                                  fontWeight: 600,
-                                  fontSize: "1rem",
-                                }}
-                              >
-                                Create Account
-                              </Button>
+                              <FormikSubmitButton
+                                id={isSigningUp}
+                                title="Create Account"
+                                onLoadingTitle="Creating Account..."
+                              />
                             </Grid>
                             <Grid size={12} textAlign={"center"}>
                               <Typography
