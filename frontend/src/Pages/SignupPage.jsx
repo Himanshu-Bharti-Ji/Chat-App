@@ -15,9 +15,11 @@ import MyInput from "../Components/MyInput";
 import { signupSchema } from "../lib/formSchema.js";
 import { useAuthStore } from "../store/useAuthStore";
 import FormikSubmitButton from "../Components/FormikSubmitButton.jsx";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const { signup, isSigningUp } = useAuthStore();
 
@@ -139,6 +141,7 @@ const SignupPage = () => {
                                       textDecoration: "underline",
                                     },
                                   }}
+                                  onClick={() => navigate("/login")}
                                 >
                                   Login
                                 </Box>

@@ -30,11 +30,11 @@ const theme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
-                    borderRadius: '8px', // Slightly rounded buttons
+                    borderRadius: '8px', 
                     padding: '8px 16px',
-                    '&:hover': {
-                        backgroundColor: '#B89554', // Warmer gold on hover
-                    },
+                    // '&:hover': {
+                    //     backgroundColor: '#B89554',
+                    // },
                 },
             },
         },
