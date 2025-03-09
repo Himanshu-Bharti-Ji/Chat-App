@@ -17,12 +17,18 @@ import {
 } from "@mui/icons-material";
 
 const iconMap = {
-  name: PersonIcon,
+  fullName: PersonIcon,
   email: EmailIcon,
   password: LockIcon,
 };
 
-const MyInput = ({ name, label, isRequired = false, formikProps }) => {
+const MyInput = ({
+  name,
+  label,
+  isRequired = false,
+  disabled = false,
+  formikProps,
+}) => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const handleTogglePassword = () => setShowPassword((prev) => !prev);
@@ -49,6 +55,7 @@ const MyInput = ({ name, label, isRequired = false, formikProps }) => {
         value={values[name]}
         onChange={handleChange}
         onBlur={handleBlur}
+        disabled={disabled}
         type={name === "password" && !showPassword ? "password" : "text"}
         sx={{ mt: 0.5 }}
         InputProps={{
@@ -61,7 +68,13 @@ const MyInput = ({ name, label, isRequired = false, formikProps }) => {
             name === "password" ? (
               <InputAdornment position="end">
                 <IconButton onClick={handleTogglePassword} edge="end">
-                  {showPassword ? <VisibilityOff sx={{ color: theme.palette.secondary.main }} /> : <Visibility sx={{ color: theme.palette.secondary.main }} />}
+                  {showPassword ? (
+                    <VisibilityOff
+                      sx={{ color: theme.palette.secondary.main }}
+                    />
+                  ) : (
+                    <Visibility sx={{ color: theme.palette.secondary.main }} />
+                  )}
                 </IconButton>
               </InputAdornment>
             ) : null,

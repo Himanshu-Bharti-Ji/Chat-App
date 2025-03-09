@@ -20,8 +20,6 @@ function App() {
     checkAuth();
   }, [checkAuth]);
 
-  console.log("authUser", { authUser });
-
   if (isCheckingAuth && !authUser) {
     return <LoaderUi />;
   }

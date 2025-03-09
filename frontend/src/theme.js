@@ -4,7 +4,8 @@ const theme = createTheme({
     palette: {
         mode: 'dark', // Ensures a dark theme
         primary: {
-            main: '#CFAF6F', // Rich golden color
+            main: '#CFAF6F',
+            dark: '#B89554' // Rich golden color
         },
         secondary: {
             main: '#cbad7c', // Deep grayish gold
@@ -30,7 +31,7 @@ const theme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
-                    borderRadius: '8px', 
+                    borderRadius: '8px',
                     padding: '8px 16px',
                     // '&:hover': {
                     //     backgroundColor: '#B89554',
