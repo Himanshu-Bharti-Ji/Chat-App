@@ -1,5 +1,12 @@
 import React, { use } from "react";
-import { Box, Button, Grid2 as Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid2 as Grid,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import Logo from "./Logo";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -9,11 +16,17 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { logout, authUser } = useAuthStore();
+  const theme = useTheme();
 
   const navigate = useNavigate();
 
   return (
-    <Grid size={12} px={2} py={1} sx={{ boxShadow: 1 }}>
+    <Grid
+      size={12}
+      px={2}
+      py={1}
+      sx={{ boxShadow: 1, backgroundColor: theme.palette.background.paper }}
+    >
       <Stack
         direction={"row"}
         alignItems={"center"}

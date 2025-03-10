@@ -23,6 +23,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import FormikSubmitButton from "../Components/FormikSubmitButton.jsx";
 import { useNavigate } from "react-router-dom";
 import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
+import { getFormatedDate } from "../lib/helper.js";
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -38,6 +39,8 @@ const ProfilePage = () => {
     }
   }, [authUser]);
 
+  console.log("userData", userData);
+
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -49,10 +52,6 @@ const ProfilePage = () => {
       setSelectedImage(base64Image);
       await updateProfile({ profilePic: base64Image });
     };
-  };
-
-  const handleSubmit = async (values) => {
-    login(values);
   };
 
   return (
@@ -156,15 +155,10 @@ const ProfilePage = () => {
                       email: userData?.email || "",
                     }}
                     enableReinitialize={true}
-                    onSubmit={handleSubmit}
                   >
                     {(props) => {
                       return (
-                        <Box
-                          component={"form"}
-                          width={"100%"}
-                          onSubmit={props.handleSubmit}
-                        >
+                        <Box component={"form"} width={"100%"}>
                           <Grid container spacing={2}>
                             <Grid size={12}>
                               <MyInput
@@ -193,7 +187,9 @@ const ProfilePage = () => {
                     <Typography>Account Information</Typography>
                     <Stack direction={"row"} justifyContent={"space-between"}>
                       <Typography fontSize={14}>Member Since</Typography>
-                      <Typography fontSize={14}>2024-12-12</Typography>
+                      <Typography fontSize={14}>
+                        {getFormatedDate(userData?.createdAt)}
+                      </Typography>
                     </Stack>
                     <Divider />
                     <Stack direction={"row"} justifyContent={"space-between"}>
