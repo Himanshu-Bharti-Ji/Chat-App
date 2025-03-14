@@ -28,6 +28,7 @@ const MyInput = ({
   isRequired = false,
   disabled = false,
   formikProps,
+  ...props
 }) => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
@@ -58,6 +59,7 @@ const MyInput = ({
         disabled={disabled}
         type={name === "password" && !showPassword ? "password" : "text"}
         sx={{ mt: 0.5 }}
+        {...props}
         InputProps={{
           startAdornment: IconComponent && (
             <InputAdornment position="start">

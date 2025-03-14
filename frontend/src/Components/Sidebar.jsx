@@ -17,13 +17,14 @@ import {
   useTheme,
 } from "@mui/material";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
   const { users, getUsers, selectedUser, setSelectedUser, isUsersLoading } =
     useChatStore();
   const theme = useTheme();
 
-  const onlineUsers = [];
+  const { onlineUsers } = useAuthStore();
 
   useEffect(() => {
     getUsers();
@@ -48,7 +49,7 @@ const Sidebar = () => {
         </Box>
       </Box>
       <Divider />
-      <Grid size={12} py={2} sx={{ overflowY: "auto", maxHeight: "70vh" }}>
+      <Grid size={12} py={2} sx={{ overflowY: "auto", maxHeight: "75vh" }}>
         {users &&
           users?.length > 0 &&
           users?.map((user, idx) => {
