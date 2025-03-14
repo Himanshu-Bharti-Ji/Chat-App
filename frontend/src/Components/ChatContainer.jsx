@@ -54,7 +54,7 @@ const ChatContainer = () => {
           {messages.map((message) => {
             const isSender = message?.senderId === authUser?._id;
             return (
-              <Grid size={12}>
+              <Grid size={12} key={message?._id}>
                 <Box
                   key={message?._id}
                   ref={messageEndRef}
