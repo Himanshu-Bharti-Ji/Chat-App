@@ -20,7 +20,7 @@ export const useAuthStore = create((set, get) => ({
     checkAuth: async () => {
         try {
             const res = await axiosInstance.get('/auth/check');
-            set({ authUser: res.data?.data });
+            set({ authUser: res?.data });
             get().connectSocket();
         } catch (error) {
             console.log('Error in checkAuth : ', error);
@@ -34,7 +34,7 @@ export const useAuthStore = create((set, get) => ({
         set({ isSigningUp: true });
         try {
             const res = await axiosInstance.post('/auth/signup', data);
-            set({ authUser: res.data });
+            set({ authUser: res?.data });
             toast.success("Account created successfully");
             get().connectSocket();
         } catch (error) {
@@ -90,9 +90,17 @@ export const useAuthStore = create((set, get) => ({
         const { authUser } = get();
         if (!authUser || get().socket?.connected) return;
 
-        const socket = io(BASE_URL)
+        const socket = io(BASE_URL, {
+            query: {
+                userId: authUser?._id
+            }
+        })
         socket.connect();
         set({ socket });
+
+        socket.on("getOnlineUsers", (userIds) => {
+            set({ onlineUsers: userIds });
+        })
     },
 
     disconnectSocket: () => {

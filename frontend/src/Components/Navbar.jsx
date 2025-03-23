@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Logo from "./Logo";
-import SettingsIcon from "@mui/icons-material/Settings";
+import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useAuthStore } from "../store/useAuthStore";
@@ -32,10 +32,7 @@ const Navbar = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Stack direction={"row"} spacing={1} alignItems={"center"}>
-          <Typography variant="h6">Chat App</Typography>
-          <Logo fontSize="small" />
-        </Stack>
+        <Logo fontSize="small" />
         <Stack direction={"row"} spacing={1} alignItems={"center"}>
           <Button
             variant="text"
@@ -45,9 +42,10 @@ const Navbar = () => {
               gap: 1,
               textTransform: "capitalize",
             }}
+            onClick={() => navigate("/")}
           >
-            <SettingsIcon />
-            <Typography>Settings</Typography>
+            <QuestionAnswerOutlinedIcon />
+            <Typography>Chat</Typography>
           </Button>
           {authUser && (
             <>

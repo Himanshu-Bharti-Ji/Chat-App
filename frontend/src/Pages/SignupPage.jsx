@@ -34,12 +34,12 @@ const SignupPage = () => {
         columns={12}
         sx={{
           height: "100%",
-          p: { xs: 6, md: 12 },
+          p: { xs: 2, md: 12 },
         }}
       >
         <Grid
           size={{ xs: 12, md: 6 }}
-          border={"1px solid"}
+          // border={"1px solid"}
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
@@ -65,7 +65,7 @@ const SignupPage = () => {
                       display={"flex"}
                       justifyContent={"center"}
                     >
-                      <Logo />
+                      <Logo logoText={false} />
                     </Box>
                     <Typography variant="h6" color="primary" fontWeight={700}>
                       Create Account

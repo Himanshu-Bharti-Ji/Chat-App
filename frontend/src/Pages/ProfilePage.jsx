@@ -35,11 +35,13 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (authUser) {
-      setUserData(authUser?.data);
+      setUserData(authUser);
     }
   }, [authUser]);
 
-  console.log("userData", userData);
+  // console.log('authUser', authUser)
+
+  // console.log("userData", userData);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];

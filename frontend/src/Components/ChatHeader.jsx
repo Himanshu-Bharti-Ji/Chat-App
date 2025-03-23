@@ -6,11 +6,13 @@ import {
   Box,
   Grid2 as Grid,
   IconButton,
+  ListItemAvatar,
   Stack,
   Typography,
   useTheme,
 } from "@mui/material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { StyledBadge } from "./HelperStructure";
 
 const ChatHeader = () => {
   const theme = useTheme();
@@ -25,11 +27,24 @@ const ChatHeader = () => {
         p={2}
         sx={{ boxShadow: 1, backgroundColor: theme.palette.background.paper }}
       >
-        <Stack direction={"row"} spacing={1.5}>
-          <Avatar src={selectedUser?.profilePic} alt={selectedUser?.fullName} />
+        <Stack direction={"row"} spacing={0}>
+          <ListItemAvatar>
+            <StyledBadge
+              overlap="circular"
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              variant={
+                onlineUsers.includes(selectedUser?._id) ? "dot" : "standard"
+              }
+            >
+              <Avatar
+                src={selectedUser?.profilePic}
+                alt={selectedUser?.fullName}
+              />
+            </StyledBadge>
+          </ListItemAvatar>
           <Stack spacing={0}>
             <Typography
-              sx={{ color: theme.palette.primary.main, fontSize: 18 }}
+              sx={{ color: theme.palette.primary.main, fontSize: 20 }}
             >
               {selectedUser?.fullName}
             </Typography>

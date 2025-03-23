@@ -23,7 +23,7 @@ const NoChatSelected = () => {
           animation: `${bounceAnimation} 1s infinite`,
         }}
       >
-        <Logo />
+        <Logo logoText={false} />
       </Box>
       <Typography variant="h6" color="primary" fontWeight={700}>
         No chat selected

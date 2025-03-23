@@ -8,13 +8,23 @@ import { useAuthStore } from "../store/useAuthStore";
 import { getFormatedDate } from "../lib/helper";
 
 const ChatContainer = () => {
-  const { messages, selectedUser, isMessagesLoading, getMessages } =
-    useChatStore();
+  const {
+    messages,
+    selectedUser,
+    isMessagesLoading,
+    getMessages,
+    subscribeToMessages,
+    unSubscribeToMessages,
+  } = useChatStore();
 
   const { authUser } = useAuthStore();
 
   useEffect(() => {
     getMessages(selectedUser?._id);
+
+    subscribeToMessages();
+
+    return () => unSubscribeToMessages();
   }, [selectedUser?._id, getMessages]);
 
   const messageEndRef = useRef(null);
@@ -51,72 +61,78 @@ const ChatContainer = () => {
             p: 2,
           }}
         >
-          {messages.map((message) => {
-            const isSender = message?.senderId === authUser?._id;
-            return (
-              <Grid size={12} key={message?._id}>
-                <Box
-                  key={message?._id}
-                  ref={messageEndRef}
-                  sx={{
-                    display: "flex",
-                    justifyContent: isSender ? "flex-end" : "flex-start",
-                    alignItems: "start",
-                  }}
-                >
-                  {/* Avatar */}
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 0.5 }}>
-                    {!isSender && (
-                      <Avatar
-                        src={selectedUser?.profilePic || "/avatar.png"}
-                        sx={{ width: 40, height: 40, mr: 1 }}
-                      />
-                    )}
-                  </Box>
-
-                  {/* Message Content */}
+          {messages &&
+            messages?.length > 0 &&
+            messages?.map((message) => {
+              const isSender = message?.senderId === authUser?._id;
+              return (
+                <Grid size={12} key={message?._id}>
                   <Box
+                    key={message?._id}
+                    ref={messageEndRef}
                     sx={{
-                      maxWidth: "60%",
-                      p: 1.5,
-                      borderRadius: 2,
-                      backgroundColor: isSender ? "secondary.main" : "grey.300",
-                      color: isSender ? "black" : "black",
-                      wordWrap: "break-word",
-                      textAlign: isSender ? "right" : "left",
+                      display: "flex",
+                      justifyContent: isSender ? "flex-end" : "flex-start",
+                      alignItems: "start",
                     }}
                   >
-                    {/* Message Image */}
-                    {message.image && (
-                      <img
-                        src={message?.image}
-                        alt="Attachment"
-                        style={{
-                          maxWidth: "200px",
-                          borderRadius: "8px",
-                        }}
-                      />
-                    )}
-                    {/* Message Text */}
-                    {message.text && (
-                      <Typography variant="body2">{message.text}</Typography>
-                    )}
-                    <Typography
-                      variant="caption"
+                    {/* Avatar */}
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", mb: 0.5 }}
+                    >
+                      {!isSender && (
+                        <Avatar
+                          src={selectedUser?.profilePic || "/avatar.png"}
+                          sx={{ width: 40, height: 40, mr: 1 }}
+                        />
+                      )}
+                    </Box>
+
+                    {/* Message Content */}
+                    <Box
                       sx={{
-                        display: "block",
-                        textAlign: "right",
-                        opacity: 0.6,
-                        mt: 0.5,
+                        maxWidth: "60%",
+                        p: 1.5,
+                        borderRadius: 2,
+                        backgroundColor: isSender
+                          ? "secondary.main"
+                          : "grey.300",
+                        color: isSender ? "black" : "black",
+                        wordWrap: "break-word",
+                        textAlign: isSender ? "right" : "left",
                       }}
                     >
-                      {getFormatedDate(message.createdAt, "hh:mm A")}
-                    </Typography>
+                      {/* Message Image */}
+                      {message.image && (
+                        <img
+                          src={message?.image}
+                          alt="Attachment"
+                          style={{
+                            maxWidth: "200px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      )}
+                      {/* Message Text */}
+                      {message.text && (
+                        <Typography variant="body2">{message.text}</Typography>
+                      )}
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          display: "block",
+                          textAlign: "right",
+                          opacity: 0.6,
+                          mt: 0.5,
+                        }}
+                      >
+                        {getFormatedDate(message.createdAt, "hh:mm A")}
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </Grid>
-            );
-          })}
+                </Grid>
+              );
+            })}
         </Grid>
       </Grid>
 
