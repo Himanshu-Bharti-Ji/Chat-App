@@ -17,7 +17,7 @@ import { signupSchema } from "../lib/formSchema.js";
 import { useAuthStore } from "../store/useAuthStore";
 import FormikSubmitButton from "../Components/FormikSubmitButton.jsx";
 import { useNavigate } from "react-router-dom";
-import AuthImagePattern from "../Components/AuthImagePattern.JSX";
+import AuthImagePattern from "../Components/AuthImagePattern.jsx";
 
 const SignupPage = () => {
   const theme = useTheme();
