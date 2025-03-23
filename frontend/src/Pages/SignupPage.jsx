@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Divider,
   Grid2 as Grid,
   Paper,
   Stack,
@@ -16,6 +17,7 @@ import { signupSchema } from "../lib/formSchema.js";
 import { useAuthStore } from "../store/useAuthStore";
 import FormikSubmitButton from "../Components/FormikSubmitButton.jsx";
 import { useNavigate } from "react-router-dom";
+import AuthImagePattern from "../Components/AuthImagePattern.JSX";
 
 const SignupPage = () => {
   const theme = useTheme();
@@ -38,7 +40,7 @@ const SignupPage = () => {
         }}
       >
         <Grid
-          size={{ xs: 12, md: 6 }}
+          size={{ xs: 12, md: 5 }}
           // border={"1px solid"}
           display={"flex"}
           justifyContent={"center"}
@@ -157,12 +159,14 @@ const SignupPage = () => {
             </Grid>
           </Paper>
         </Grid>
-        <Grid
-          size={6}
-          border={"1px solid"}
-          display={{ xs: "none", md: "block" }}
-        >
-          ahga
+        <Grid size={1}>
+          <Divider orientation="vertical" />
+        </Grid>
+        <Grid size={6} display={{ xs: "none", md: "block" }}>
+          <AuthImagePattern
+            title="Join our community"
+            subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
+          />
         </Grid>
       </Grid>
     </Grid>

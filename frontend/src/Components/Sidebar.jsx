@@ -101,6 +101,16 @@ const Sidebar = () => {
               </ListItem>
             );
           })}
+        {filteredUsers?.length === 0 && (
+          <Stack
+            direction={"row"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            height={"100%"}
+          >
+            <Typography color={"text.secondary"}>No online users</Typography>
+          </Stack>
+        )}
       </Grid>
     </Grid>
   );

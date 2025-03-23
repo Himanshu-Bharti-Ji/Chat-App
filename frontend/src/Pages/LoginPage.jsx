@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Divider,
   Grid2 as Grid,
   Paper,
   Stack,
@@ -16,6 +17,7 @@ import { loginSchema } from "../lib/formSchema.js";
 import { useAuthStore } from "../store/useAuthStore";
 import FormikSubmitButton from "../Components/FormikSubmitButton.jsx";
 import { useNavigate } from "react-router-dom";
+import AuthImagePattern from "../Components/AuthImagePattern.jsx";
 
 const LoginPage = () => {
   const theme = useTheme();
@@ -38,11 +40,11 @@ const LoginPage = () => {
         }}
       >
         <Grid
-          size={{ xs: 12, md: 6 }}
-          // border={"1px solid"}
+          size={{ xs: 12, md: 5 }}
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
+          // border={"1px solid"}
         >
           <Paper
             sx={{
@@ -148,12 +150,16 @@ const LoginPage = () => {
             </Grid>
           </Paper>
         </Grid>
-        <Grid
-          size={6}
-          border={"1px solid"}
-          display={{ xs: "none", md: "block" }}
-        >
-          ahga
+        <Grid size={1}>
+          <Divider orientation="vertical" />
+        </Grid>
+        <Grid size={6} display={{ xs: "none", md: "block" }}>
+          <AuthImagePattern
+            title={"Welcome back!"}
+            subtitle={
+              "Sign in to continue your conversations and catch up with your messages."
+            }
+          />
         </Grid>
       </Grid>
     </Grid>

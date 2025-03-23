@@ -30,7 +30,9 @@ const ChatContainer = () => {
   const messageEndRef = useRef(null);
 
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messageEndRef.current && messages && messages?.length > 0) {
+      messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
 
   if (isMessagesLoading) {

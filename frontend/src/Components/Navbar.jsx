@@ -34,21 +34,21 @@ const Navbar = () => {
       >
         <Logo fontSize="small" />
         <Stack direction={"row"} spacing={1} alignItems={"center"}>
-          <Button
-            variant="text"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              textTransform: "capitalize",
-            }}
-            onClick={() => navigate("/")}
-          >
-            <QuestionAnswerOutlinedIcon />
-            <Typography>Chat</Typography>
-          </Button>
           {authUser && (
             <>
+              <Button
+                variant="text"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  textTransform: "capitalize",
+                }}
+                onClick={() => navigate("/")}
+              >
+                <QuestionAnswerOutlinedIcon />
+                <Typography>Chat</Typography>
+              </Button>
               <Button
                 variant="text"
                 sx={{
