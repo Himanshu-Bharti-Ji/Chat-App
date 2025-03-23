@@ -63,7 +63,7 @@ const ProfilePage = () => {
         columns={12}
         sx={{
           height: "100%",
-          p: { xs: 6, md: 12 },
+          p: { xs: 2, md: 12 },
         }}
         justifyContent={"center"}
         alignItems={"center"}

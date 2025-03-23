@@ -24,7 +24,7 @@ const ChatHeader = () => {
       <Stack
         direction={"row"}
         justifyContent={"space-between"}
-        p={2}
+        p={{ xs: 1, md: 2 }}
         sx={{ boxShadow: 1, backgroundColor: theme.palette.background.paper }}
       >
         <Stack direction={"row"} spacing={0}>
@@ -44,11 +44,14 @@ const ChatHeader = () => {
           </ListItemAvatar>
           <Stack spacing={0}>
             <Typography
-              sx={{ color: theme.palette.primary.main, fontSize: 20 }}
+              sx={{
+                color: theme.palette.primary.main,
+                fontSize: { xs: 16, md: 18 },
+              }}
             >
               {selectedUser?.fullName}
             </Typography>
-            <Typography sx={{ fontSize: 14 }}>
+            <Typography sx={{ fontSize: { xs: 12, md: 14 } }}>
               {onlineUsers?.includes(selectedUser?._id) ? "Online" : "Offline"}
             </Typography>
           </Stack>

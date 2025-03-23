@@ -79,7 +79,10 @@ const Sidebar = () => {
                       : "transparent",
                 }}
               >
-                <ListItemButton onClick={() => setSelectedUser(user)}>
+                <ListItemButton
+                  onClick={() => setSelectedUser(user)}
+                  sx={{ px: 1 }}
+                >
                   <ListItemAvatar>
                     <StyledBadge
                       overlap="circular"

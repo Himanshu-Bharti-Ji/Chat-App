@@ -64,7 +64,7 @@ const MessageInput = () => {
   };
 
   return (
-    <Grid size={"auto"} px={2} py={1}>
+    <Grid size={"auto"} px={{ xs: 1, md: 2 }} py={1}>
       {imagePreview && (
         <Badge
           overlap="circular"
@@ -112,7 +112,7 @@ const MessageInput = () => {
               </Grid>
 
               <Grid size="auto">
-                <Stack direction={"row"} alignItems={"center"} spacing={1.5}>
+                <Stack direction={"row"} alignItems={"center"} spacing={1}>
                   <input
                     type="file"
                     hidden

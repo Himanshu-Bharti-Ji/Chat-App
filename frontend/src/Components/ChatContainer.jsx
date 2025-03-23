@@ -60,7 +60,8 @@ const ChatContainer = () => {
           spacing={2}
           sx={{
             overflowY: "auto",
-            p: 2,
+            py: 2,
+            px: { xs: 1, md: 2 },
           }}
         >
           {messages &&
@@ -93,15 +94,24 @@ const ChatContainer = () => {
                     {/* Message Content */}
                     <Box
                       sx={{
-                        maxWidth: "60%",
-                        p: 1.5,
+                        maxWidth: "75%", // More natural width
+                        p: 1,
+                        pb: 0,
                         borderRadius: 2,
                         backgroundColor: isSender
-                          ? "secondary.main"
+                          ? "secondary.light"
                           : "grey.300",
-                        color: isSender ? "black" : "black",
+                        color: "black",
                         wordWrap: "break-word",
-                        textAlign: isSender ? "right" : "left",
+                        textAlign: "left", // Always left for better readability
+                        alignSelf: isSender ? "flex-end" : "flex-start",
+                        boxShadow: 1, // Slight shadow for depth
+                        borderTopRightRadius: isSender ? 0 : 10,
+                        borderTopLeftRadius: isSender ? 10 : 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 0.5,
+                        position: "relative",
                       }}
                     >
                       {/* Message Image */}
@@ -125,7 +135,7 @@ const ChatContainer = () => {
                           display: "block",
                           textAlign: "right",
                           opacity: 0.6,
-                          mt: 0.5,
+                          // mt: 0.5,
                         }}
                       >
                         {getFormatedDate(message.createdAt, "hh:mm A")}
