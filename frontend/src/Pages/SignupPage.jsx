@@ -159,7 +159,7 @@ const SignupPage = () => {
             </Grid>
           </Paper>
         </Grid>
-        <Grid size={1}>
+        <Grid size={1} display={{ xs: "none", md: "block" }}>
           <Divider orientation="vertical" />
         </Grid>
         <Grid size={6} display={{ xs: "none", md: "block" }}>

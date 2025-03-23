@@ -59,7 +59,11 @@ const Sidebar = () => {
         </Box>
       </Box>
       <Divider />
-      <Grid size={12} py={2} sx={{ overflowY: "auto", maxHeight: "75vh" }}>
+      <Grid
+        size={12}
+        py={1}
+        sx={{ overflowY: "auto", maxHeight: "calc(100vh - 150px)" }}
+      >
         {filteredUsers &&
           filteredUsers?.length > 0 &&
           filteredUsers?.map((user, idx) => {

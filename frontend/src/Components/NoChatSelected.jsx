@@ -17,6 +17,9 @@ const NoChatSelected = () => {
       alignItems="center"
       height="100%"
       spacing={2}
+      sx={{
+        display: { xs: "none", md: "flex" },
+      }}
     >
       <Box
         sx={{

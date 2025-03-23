@@ -3,7 +3,7 @@ import React from "react";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { Link } from "react-router-dom";
 
-const Logo = ({ fontSize = "large", logoText = true }) => {
+const Logo = ({ fontSize = "large", logoText = true, smPadding = 1 }) => {
   return (
     <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
       <Stack direction={"row"} spacing={1} alignItems={"center"}>
@@ -13,7 +13,7 @@ const Logo = ({ fontSize = "large", logoText = true }) => {
             backgroundColor: "rgba(255, 255, 255, 0.1)",
             boxShadow: 4,
             width: "fit-content",
-            p: 1,
+            p: { xs: smPadding, md: 1 },
             borderRadius: "16%",
             display: "flex",
             justifyContent: "center",

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid2 as Grid, Paper } from "@mui/material";
+import { Grid2 as Grid, Paper, useMediaQuery, useTheme } from "@mui/material";
 import Sidebar from "../Components/Sidebar";
 import NoChatSelected from "../Components/NoChatSelected";
 import ChatContainer from "../Components/ChatContainer";
@@ -7,31 +7,39 @@ import { useChatStore } from "../store/useChatStore";
 
 const HomePage = () => {
   const { selectedUser } = useChatStore();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Grid
       container
-      height={"90vh"}
+      height={{ xs: "100dvh", md: "100sh" }}
       alignItems={"center"}
       justifyContent={"center"}
-      py={2}
+      p={2}
     >
-      <Grid size={8} height={"100%"}>
+      <Grid size={{ xs: 12, md: 8 }} height={"100%"}>
         <Paper
           sx={{
             height: "100%",
             p: 1,
+            overflow: "hidden",
           }}
         >
           <Grid container height={"100%"}>
-            <Grid size={3}>
+            <Grid
+              size={{ xs: 12, md: 3 }}
+              display={selectedUser && isMobile ? "none" : "block"}
+            >
               <Sidebar />
             </Grid>
             <Grid
-              size={9}
+              size={{ xs: 12, md: 9 }}
               sx={{
-                borderLeft: "1px solid",
-                borderColor: "rgba(255, 255, 255, 0.12)",
+                borderLeft: {
+                  xs: "none",
+                  md: "1px solid rgba(255, 255, 255, 0.12)",
+                },
               }}
             >
               {!selectedUser ? <NoChatSelected /> : <ChatContainer />}
