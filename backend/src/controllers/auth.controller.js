@@ -95,14 +95,14 @@ export const logout = asyncHandler(async (req, res) => {
 
 // update profile controller
 export const updateProfile = asyncHandler(async (req, res) => {
-    const { profilePic } = req.body;
+    const profilePic = req.files?.profilePic;
     const userId = req.user._id;
 
     if (!profilePic) {
         throw new ApiError(400, "Profile picture is required")
     }
 
-    const uploadedProfilePic = await cloudinary.uploader.upload(profilePic);
+    const uploadedProfilePic = await cloudinary.uploader.upload(profilePic?.tempFilePath);
 
     const updatedUser = await User.findByIdAndUpdate(userId, {
         profilePic: uploadedProfilePic.secure_url

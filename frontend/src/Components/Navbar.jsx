@@ -62,9 +62,9 @@ const Navbar = () => {
 
         {!isMobile && authUser && (
           <Box display="flex" gap={2}>
-            {menuItems.map(({ text, icon, path, action }) => (
+            {menuItems.map(({ text, icon, path, action }, idx) => (
               <Button
-                key={text}
+                key={idx}
                 variant="text"
                 onClick={() => (action ? action() : navigate(path))}
                 sx={{
@@ -106,7 +106,7 @@ const Navbar = () => {
           <List>
             {menuItems.map(({ text, icon, path, action }, idx) => (
               <>
-                <ListItem key={text} disablePadding>
+                <ListItem key={idx} disablePadding>
                   <ListItemButton
                     onClick={() => (action ? action() : navigate(path))}
                   >

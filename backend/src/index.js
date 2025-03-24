@@ -8,6 +8,8 @@ import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';
 import { connectDB } from './lib/db.js';
 import { app, server } from './lib/socket.js';
+import fileUpload from 'express-fileupload';
+
 
 dotenv.config();
 
@@ -15,6 +17,8 @@ const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
 app.use(cookieParser());
 
 app.use(cors({

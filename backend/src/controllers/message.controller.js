@@ -26,13 +26,15 @@ export const getMessages = asyncHandler(async (req, res) => {
 })
 
 export const sendMessage = asyncHandler(async (req, res) => {
-    const { text, image } = req.body;
+
+    const { text } = req.body;
+    const image = req.files?.image;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
 
     let imageUrl;
     if (image) {
-        const uploadedImage = await cloudinary.uploader.upload(image);
+        const uploadedImage = await cloudinary.uploader.upload(image?.tempFilePath);
         imageUrl = uploadedImage.secure_url;
     }
 

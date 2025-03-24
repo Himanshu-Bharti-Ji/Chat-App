@@ -2,7 +2,6 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   Chip,
   CircularProgress,
   Divider,
@@ -15,22 +14,16 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Logo from "../Components/Logo";
 import { Formik } from "formik";
 import MyInput from "../Components/MyInput";
-import { loginSchema } from "../lib/formSchema.js";
 import { useAuthStore } from "../store/useAuthStore";
-import FormikSubmitButton from "../Components/FormikSubmitButton.jsx";
-import { useNavigate } from "react-router-dom";
 import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
 import { getFormatedDate } from "../lib/helper.js";
 
 const ProfilePage = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-
   const { updateProfile, authUser, isUpdatingProfile } = useAuthStore();
 
   useEffect(() => {
@@ -39,21 +32,20 @@ const ProfilePage = () => {
     }
   }, [authUser]);
 
-  // console.log('authUser', authUser)
-
-  // console.log("userData", userData);
-
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      const base64Image = reader.result;
-      setSelectedImage(base64Image);
-      await updateProfile({ profilePic: base64Image });
-    };
+    const formData = new FormData();
+    formData.append("profilePic", file);
+
+    setSelectedImage(URL.createObjectURL(file));
+
+    try {
+      await updateProfile(formData);
+    } catch (error) {
+      console.error("Profile update failed:", error);
+    }
   };
 
   return (
@@ -69,22 +61,11 @@ const ProfilePage = () => {
         alignItems={"center"}
       >
         <Grid size={{ xs: 12, md: 3.5 }}>
-          <Paper
-            sx={{
-              p: 2.5,
-              width: "100%",
-            }}
-          >
+          <Paper sx={{ p: 2.5, width: "100%" }}>
             <Grid size={12}>
               <Grid container spacing={4}>
                 <Grid size={12} textAlign={"center"}>
-                  <Stack
-                    spacing={2}
-                    justifyContent={"center"}
-                    sx={{
-                      mb: 1,
-                    }}
-                  >
+                  <Stack spacing={2} justifyContent={"center"} sx={{ mb: 1 }}>
                     <Typography variant="h6" color="primary" fontWeight={700}>
                       Profile
                     </Typography>
@@ -98,6 +79,7 @@ const ProfilePage = () => {
                       width={"100%"}
                       display={"flex"}
                       justifyContent={"center"}
+                      position="relative"
                     >
                       <Badge
                         overlap="circular"
@@ -126,6 +108,7 @@ const ProfilePage = () => {
                                     backgroundColor: theme.palette.primary.dark,
                                   },
                                 }}
+                                disabled={isUpdatingProfile}
                               >
                                 <PhotoCameraOutlinedIcon fontSize="small" />
                               </IconButton>
@@ -136,9 +119,34 @@ const ProfilePage = () => {
                         <Avatar
                           alt={userData?.fullName}
                           src={selectedImage || userData?.profilePic || ""}
-                          sx={{ width: 100, height: 100 }}
+                          sx={{
+                            width: 100,
+                            height: 100,
+                            objectFit: "cover",
+                            opacity: isUpdatingProfile ? 0.6 : 1,
+                          }}
                         />
                       </Badge>
+
+                      {isUpdatingProfile && (
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: 100,
+                            height: 100,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: "rgba(0, 0, 0, 0.4)",
+                            borderRadius: "50%",
+                          }}
+                        >
+                          <CircularProgress size={24} sx={{ color: "white" }} />
+                        </Box>
+                      )}
                     </Box>
                     <Typography
                       variant="body2"
@@ -158,30 +166,28 @@ const ProfilePage = () => {
                     }}
                     enableReinitialize={true}
                   >
-                    {(props) => {
-                      return (
-                        <Box component={"form"} width={"100%"}>
-                          <Grid container spacing={2}>
-                            <Grid size={12}>
-                              <MyInput
-                                disabled
-                                name={"fullName"}
-                                label="Full Name"
-                                formikProps={props}
-                              />
-                            </Grid>
-                            <Grid size={12}>
-                              <MyInput
-                                disabled
-                                name={"email"}
-                                label="Email Address"
-                                formikProps={props}
-                              />
-                            </Grid>
+                    {(props) => (
+                      <Box component={"form"} width={"100%"}>
+                        <Grid container spacing={2}>
+                          <Grid size={12}>
+                            <MyInput
+                              disabled
+                              name={"fullName"}
+                              label="Full Name"
+                              formikProps={props}
+                            />
                           </Grid>
-                        </Box>
-                      );
-                    }}
+                          <Grid size={12}>
+                            <MyInput
+                              disabled
+                              name={"email"}
+                              label="Email Address"
+                              formikProps={props}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    )}
                   </Formik>
                 </Grid>
                 <Grid size={12} color={theme.palette.secondary.main}>
