@@ -55,7 +55,7 @@ const Sidebar = () => {
           label="Show online only"
         />
         <Box component={"span"} fontSize={14} ml={-1}>
-          ({onlineUsers.length - 1} online)
+          ({Math.max(0, onlineUsers.length - 1)} online)
         </Box>
       </Box>
       <Divider />

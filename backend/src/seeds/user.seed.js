@@ -3,6 +3,7 @@ import User from '../models/user.model.js';
 import { connectDB } from '../lib/db.js';
 import { asyncHandler } from '../lib/utils.js';
 import bcrypt from "bcryptjs"
+import Message from '../models/message.model.js';
 config();
 
 const seedUsers = [
@@ -71,15 +72,20 @@ const seedUsers = [
 const seedDatabase = asyncHandler(async () => {
     await connectDB();
 
+    // Delete existing users and messages
+    await User.deleteMany();
+    await Message.deleteMany();
+    console.log("Existing users and messages deleted.");
+
+    // Hash passwords and seed new users
     for (const user of seedUsers) {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
-
         await User.create(user);
     }
 
-    console.log('Database seeded successfully');
+    console.log("Database seeded successfully.");
     process.exit();
-})
+});
 
 seedDatabase();
