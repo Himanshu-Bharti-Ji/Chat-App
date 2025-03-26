@@ -33,9 +33,18 @@ const Navbar = () => {
 
   const menuItems = [
     { text: "Chat", icon: <QuestionAnswerOutlinedIcon />, path: "/" },
-    { text: "Profile", icon: <PersonOutlineOutlinedIcon />, path: "/profile" },
-    { text: "Logout", icon: <LogoutOutlinedIcon />, action: logout },
   ];
+
+  if (authUser) {
+    menuItems.push(
+      {
+        text: "Profile",
+        icon: <PersonOutlineOutlinedIcon />,
+        path: "/profile",
+      },
+      { text: "Logout", icon: <LogoutOutlinedIcon />, action: logout }
+    );
+  }
 
   return (
     <AppBar
