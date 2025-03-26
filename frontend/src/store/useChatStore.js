@@ -16,6 +16,10 @@ export const useChatStore = create((set, get) => ({
         try {
             const res = await axiosInstance.get("/messages/users");
             set({ users: res?.data });
+
+            // Emit request to get updated online users
+            const { socket } = useAuthStore.getState();
+            socket?.emit("requestOnlineUsers");
         } catch (error) {
             console.log("Error in getUsers : ", error);
             toast.error(error?.response?.data?.message || "Something went wrong");
