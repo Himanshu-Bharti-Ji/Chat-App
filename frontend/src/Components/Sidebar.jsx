@@ -30,7 +30,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getUsers();
-    setShowOnlineOnly(true); 
+    // setShowOnlineOnly(true); 
   }, [getUsers, onlineUsers]);
 
   const filteredUsers = showOnlineOnly
